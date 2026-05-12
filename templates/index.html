@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Forest Fire Prediction | Vishal CMVR</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Inter',sans-serif;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            background:#f8fafc;
+            color:#111827;
+            overflow-x:hidden;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            width:100%;
+            height:85px;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:0 8%;
+
+            position:fixed;
+            top:0;
+
+            background:rgba(255,255,255,0.75);
+
+            backdrop-filter:blur(12px);
+
+            border-bottom:1px solid #e5e7eb;
+
+            z-index:1000;
+        }
+
+        .logo{
+            font-size:24px;
+            font-weight:800;
+            color:#111827;
+            letter-spacing:-1px;
+        }
+
+        .nav-links{
+            display:flex;
+            gap:35px;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:#374151;
+            font-weight:500;
+            transition:0.3s;
+        }
+
+        .nav-links a:hover{
+            color:#111827;
+        }
+
+        .nav-btn{
+            text-decoration:none;
+            background:#111827;
+            color:white;
+            padding:14px 24px;
+            border-radius:14px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .nav-btn:hover{
+            background:black;
+            transform:translateY(-2px);
+        }
+
+        /* HERO SECTION */
+
+        .hero{
+            min-height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            padding:120px 8% 60px;
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .hero::before{
+            content:'';
+
+            position:absolute;
+
+            width:600px;
+            height:600px;
+
+            background:#dbeafe;
+
+            border-radius:50%;
+
+            top:-200px;
+            right:-150px;
+
+            filter:blur(100px);
+
+            z-index:-1;
+        }
+
+        .hero-container{
+            width:100%;
+
+            display:grid;
+            grid-template-columns:1.1fr 1fr;
+
+            align-items:center;
+
+            gap:70px;
+        }
+
+        /* LEFT CONTENT */
+
+        .hero-left .badge{
+            display:inline-block;
+
+            background:#111827;
+            color:white;
+
+            padding:10px 18px;
+
+            border-radius:999px;
+
+            font-size:13px;
+            font-weight:600;
+
+            margin-bottom:28px;
+        }
+
+        .hero-left h1{
+            font-size:78px;
+
+            line-height:1.02;
+
+            font-weight:800;
+
+            letter-spacing:-4px;
+
+            color:#0f172a;
+
+            margin-bottom:28px;
+        }
+
+        .hero-left p{
+            font-size:18px;
+
+            line-height:1.8;
+
+            color:#64748b;
+
+            max-width:650px;
+
+            margin-bottom:40px;
+        }
+
+        /* CREATOR */
+
+        .creator-card{
+            width:fit-content;
+
+            background:white;
+
+            padding:28px 38px;
+
+            border-radius:28px;
+
+            border:1px solid #e5e7eb;
+
+            box-shadow:
+            0 10px 35px rgba(15,23,42,0.07);
+
+            margin-bottom:45px;
+        }
+
+        .creator-card span{
+            display:block;
+
+            color:#6b7280;
+
+            font-size:13px;
+
+            text-transform:uppercase;
+
+            letter-spacing:1px;
+
+            margin-bottom:10px;
+
+            font-weight:600;
+        }
+
+        .creator-card h2{
+            font-size:42px;
+
+            font-weight:800;
+
+            letter-spacing:-1px;
+
+            color:#111827;
+        }
+
+        /* BUTTONS */
+
+        .hero-buttons{
+            display:flex;
+            gap:18px;
+            flex-wrap:wrap;
+        }
+
+        .primary-btn{
+            text-decoration:none;
+
+            background:#111827;
+
+            color:white;
+
+            padding:18px 34px;
+
+            border-radius:18px;
+
+            font-weight:600;
+
+            transition:0.3s;
+        }
+
+        .primary-btn:hover{
+            transform:translateY(-3px);
+            background:black;
+        }
+
+        .secondary-btn{
+            text-decoration:none;
+
+            background:white;
+
+            color:#111827;
+
+            padding:18px 34px;
+
+            border-radius:18px;
+
+            border:1px solid #d1d5db;
+
+            font-weight:600;
+
+            transition:0.3s;
+        }
+
+        .secondary-btn:hover{
+            background:#f3f4f6;
+        }
+
+        /* RIGHT SIDE */
+
+        .hero-right{
+            position:relative;
+        }
+
+        .dashboard-card{
+            background:white;
+
+            border-radius:30px;
+
+            padding:35px;
+
+            border:1px solid #e5e7eb;
+
+            box-shadow:
+            0 20px 50px rgba(15,23,42,0.08);
+        }
+
+        .card-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            margin-bottom:30px;
+        }
+
+        .card-header h3{
+            font-size:24px;
+            color:#111827;
+        }
+
+        .status{
+            background:#dcfce7;
+
+            color:#166534;
+
+            padding:10px 16px;
+
+            border-radius:999px;
+
+            font-size:13px;
+
+            font-weight:600;
+        }
+
+        .metric-box{
+            background:#f8fafc;
+
+            border:1px solid #e5e7eb;
+
+            border-radius:22px;
+
+            padding:24px;
+
+            margin-bottom:18px;
+        }
+
+        .metric-box span{
+            color:#6b7280;
+            font-size:14px;
+        }
+
+        .metric-box h2{
+            margin-top:8px;
+
+            font-size:34px;
+
+            color:#111827;
+        }
+
+        .bottom-grid{
+            display:grid;
+
+            grid-template-columns:1fr 1fr;
+
+            gap:18px;
+        }
+
+        .small-card{
+            background:#111827;
+
+            color:white;
+
+            padding:24px;
+
+            border-radius:22px;
+        }
+
+        .small-card span{
+            color:#9ca3af;
+            font-size:13px;
+        }
+
+        .small-card h3{
+            margin-top:10px;
+            font-size:28px;
+        }
+
+        .small-card.light{
+            background:#f3f4f6;
+            color:#111827;
+        }
+
+        .small-card.light span{
+            color:#6b7280;
+        }
+
+        /* FOOTER */
+
+        footer{
+            padding:40px;
+            text-align:center;
+
+            color:#6b7280;
+
+            border-top:1px solid #e5e7eb;
+
+            background:white;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1100px){
+
+            .hero-container{
+                grid-template-columns:1fr;
+            }
+
+            .hero-left h1{
+                font-size:58px;
+            }
+        }
+
+        @media(max-width:768px){
+
+            .navbar{
+                padding:0 5%;
+            }
+
+            .nav-links{
+                display:none;
+            }
+
+            .hero{
+                padding:120px 5% 60px;
+            }
+
+            .hero-left h1{
+                font-size:44px;
+                letter-spacing:-2px;
+            }
+
+            .creator-card h2{
+                font-size:30px;
+            }
+
+            .bottom-grid{
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Vishal CMVR
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Model</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <a href="/predictdata" class="nav-btn">
+            Launch App
+        </a>
+
+    </nav>
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div class="hero-container">
+
+            <!-- LEFT -->
+
+            <div class="hero-left">
+
+                <div class="badge">
+                    Machine Learning Powered
+                </div>
+
+                <h1>
+                    Predict Forest Fire Risk With AI
+                </h1>
+
+                <p>
+                    A modern Machine Learning application that predicts forest fire
+                    weather conditions using environmental and atmospheric data.
+                    Designed with clean UI and intelligent prediction systems.
+                </p>
+
+                <div class="creator-card">
+
+                    <span>MODEL BUILT BY</span>
+
+                    <h2>VISHAL CMVR</h2>
+
+                </div>
+
+                <div class="hero-buttons">
+
+                    <a href="/predictdata" class="primary-btn">
+                        Start Prediction
+                    </a>
+
+                    <a href="#" class="secondary-btn">
+                        View Project
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="hero-right">
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <h3>Prediction Dashboard</h3>
+
+                        <div class="status">
+                            Active
+                        </div>
+
+                    </div>
+
+                    <div class="metric-box">
+
+                        <span>Machine Learning Model</span>
+
+                        <h2>Regression AI</h2>
+
+                    </div>
+
+                    <div class="metric-box">
+
+                        <span>Input Parameters</span>
+
+                        <h2>9 Features</h2>
+
+                    </div>
+
+                    <div class="bottom-grid">
+
+                        <div class="small-card">
+
+                            <span>Accuracy</span>
+
+                            <h3>96%</h3>
+
+                        </div>
+
+                        <div class="small-card light">
+
+                            <span>Prediction Speed</span>
+
+                            <h3>0.2s</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Vishal CMVR • Machine Learning Forest Fire Prediction Project
+
+    </footer>
+
+</body>
+</html>
